@@ -4,7 +4,8 @@ import productBag from '@/assets/product-bag.jpg';
 import productShoes from '@/assets/product-shoes.jpg';
 import productSunglasses from '@/assets/product-sunglasses.jpg';
 
-export const products: Product[] = [
+// Legacy products - keeping for backward compatibility
+export const products = [
   {
     id: '1',
     name: 'Luxury Chronograph Watch',
