@@ -153,8 +153,8 @@ export function Header() {
               </li>
               {topCategories.map((category) => (
                 <li key={category} className="nav-item">
-                  <Link 
-                    className="nav-link" 
+                  <Link
+                    className="nav-link"
                     to={`/c/${category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
                   >
                     {category}
@@ -168,7 +168,7 @@ export function Header() {
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="d-lg-none position-fixed top-0 start-0 w-100 h-100 bg-white" style={{zIndex: 1050}}>
+        <div className="d-lg-none position-fixed top-0 start-0 w-100 h-100 bg-white" style={{ zIndex: 1050 }}>
           <div className="p-3">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h5>Menu</h5>
@@ -199,7 +199,7 @@ export function Header() {
               <hr />
               {topCategories.map((category) => (
                 <li key={category} className="mb-2">
-                  <Link 
+                  <Link
                     to={`/c/${category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
                     className="text-decoration-none"
                     onClick={() => setIsMenuOpen(false)}

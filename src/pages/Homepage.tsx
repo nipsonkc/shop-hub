@@ -13,7 +13,7 @@ export default function Homepage() {
   return (
     <div className="min-vh-100 d-flex flex-column">
       <Header />
-      
+
       <main className="flex-grow-1">
         {/* Hero Section */}
         <section className="bg-primary text-white py-5">
@@ -31,9 +31,9 @@ export default function Homepage() {
                 </Link>
               </div>
               <div className="col-lg-6">
-                <img 
-                  src="/placeholder.svg" 
-                  alt="Hero Banner" 
+                <img
+                  src="/placeholder.jpg"
+                  alt="Hero Banner"
                   className="img-fluid rounded"
                 />
               </div>
@@ -48,14 +48,14 @@ export default function Homepage() {
             <div className="row g-4">
               {topCategories.map((category) => (
                 <div key={category} className="col-6 col-md-4 col-lg-3">
-                  <Link 
+                  <Link
                     to={`/c/${category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
                     className="text-decoration-none"
                   >
                     <div className="card h-100 shadow-sm">
                       <div className="card-body text-center">
-                        <img 
-                          src="/placeholder.svg" 
+                        <img
+                          src="/placeholder.svg"
                           alt={category}
                           className="img-fluid mb-3 rounded"
                           style={{ width: '80px', height: '80px', objectFit: 'cover' }}
@@ -84,8 +84,8 @@ export default function Homepage() {
                 <div key={product.id} className="col-6 col-md-3">
                   <Link to={`/p/${product.slug}`} className="text-decoration-none">
                     <div className="card h-100 shadow-sm">
-                      <img 
-                        src={product.images[0]} 
+                      <img
+                        src={product.images[0]}
                         alt={product.title}
                         className="card-img-top"
                         style={{ height: '200px', objectFit: 'cover' }}
