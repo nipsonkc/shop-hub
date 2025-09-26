@@ -4,6 +4,7 @@ import { Navigation } from '@/components/Navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
+import { Header } from '@/components/Header';
 
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, totalPrice, totalItems } = useCart();
@@ -11,7 +12,7 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-background">
-        <Navigation />
+        <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center py-16">
             <ShoppingBag className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
@@ -30,8 +31,8 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-      
+      <Header />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -58,7 +59,7 @@ export default function Cart() {
                         className="w-full h-full object-cover rounded-lg"
                       />
                     </div>
-                    
+
                     <div className="flex-1">
                       <div className="flex justify-between items-start">
                         <div>
@@ -79,7 +80,7 @@ export default function Cart() {
                             )}
                           </div>
                         </div>
-                        
+
                         <Button
                           variant="ghost"
                           size="icon"
@@ -89,7 +90,7 @@ export default function Cart() {
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between mt-4">
                         <div className="flex items-center border rounded-md">
                           <button
@@ -108,7 +109,7 @@ export default function Cart() {
                             <Plus className="h-4 w-4" />
                           </button>
                         </div>
-                        
+
                         <div className="text-right">
                           <span className="text-lg font-semibold text-foreground">
                             ${(item.product.price * item.quantity).toFixed(2)}
@@ -129,7 +130,7 @@ export default function Cart() {
                 <h2 className="text-xl font-semibold text-foreground mb-6">
                   Order Summary
                 </h2>
-                
+
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Subtotal</span>
@@ -156,7 +157,7 @@ export default function Cart() {
                 <Button className="w-full" size="lg" variant="shop">
                   Proceed to Checkout
                 </Button>
-                
+
                 <p className="text-xs text-muted-foreground text-center mt-4">
                   Secure checkout with SSL encryption
                 </p>

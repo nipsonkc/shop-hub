@@ -36,7 +36,7 @@ export function Navigation({ onSearch }: NavigationProps) {
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">E</span>
             </div>
-            <span className="text-xl font-bold text-shop-primary">EliteShop</span>
+            <span className="text-xl font-bold text-shop-primary">ShopHub</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -76,7 +76,7 @@ export function Navigation({ onSearch }: NavigationProps) {
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />
             </Button>
-            
+
             <Link to="/cart">
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
@@ -122,7 +122,7 @@ export function Navigation({ onSearch }: NavigationProps) {
                   </button>
                 </div>
               </form>
-              
+
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
