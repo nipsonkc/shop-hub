@@ -3,19 +3,20 @@ import { Navigation } from '@/components/Navigation';
 import { ProductCard } from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { products, categories } from '@/data/products';
+import { sampleProducts } from '@/data/sampleProducts';
+import { topCategories } from '@/data/taxonomy';
 
 export default function Products() {
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState(sampleProducts);
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [sortBy, setSortBy] = useState('name');
 
   const handleCategoryFilter = (category: string) => {
     setSelectedCategory(category);
     if (category === 'All Products') {
-      setFilteredProducts(products);
+      setFilteredProducts(sampleProducts);
     } else {
-      setFilteredProducts(products.filter(product => product.category === category));
+      setFilteredProducts(sampleProducts.filter(product => product.categoryPath[0] === category));
     }
   };
 
@@ -31,17 +32,17 @@ export default function Products() {
           return b.rating - a.rating;
         case 'name':
         default:
-          return a.name.localeCompare(b.name);
+          return a.title.localeCompare(b.title);
       }
     });
     setFilteredProducts(sorted);
   };
 
   const handleSearch = (query: string) => {
-    const filtered = products.filter(product =>
-      product.name.toLowerCase().includes(query.toLowerCase()) ||
-      product.description.toLowerCase().includes(query.toLowerCase()) ||
-      product.category.toLowerCase().includes(query.toLowerCase())
+    const filtered = sampleProducts.filter(product =>
+      product.title.toLowerCase().includes(query.toLowerCase()) ||
+      product.descriptionBullets.join(' ').toLowerCase().includes(query.toLowerCase()) ||
+      product.categoryPath.join(' ').toLowerCase().includes(query.toLowerCase())
     );
     setFilteredProducts(filtered);
   };
@@ -49,7 +50,7 @@ export default function Products() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation onSearch={handleSearch} />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -63,10 +64,17 @@ export default function Products() {
         {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
+            <Button
+              variant={selectedCategory === 'All Products' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => handleCategoryFilter('All Products')}
+            >
+              All Products
+            </Button>
+            {topCategories.map((category) => (
               <Button
                 key={category}
-                variant={selectedCategory === category ? 'shop' : 'shop-outline'}
+                variant={selectedCategory === category ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => handleCategoryFilter(category)}
               >
@@ -74,7 +82,7 @@ export default function Products() {
               </Button>
             ))}
           </div>
-          
+
           <div className="md:ml-auto">
             <Select value={sortBy} onValueChange={handleSort}>
               <SelectTrigger className="w-48">

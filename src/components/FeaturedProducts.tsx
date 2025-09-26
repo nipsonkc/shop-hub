@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ProductCard';
-import { products } from '@/data/products';
+import { sampleProducts } from '@/data/sampleProducts';
 
 export function FeaturedProducts() {
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = sampleProducts.slice(0, 4);
 
   return (
     <section className="py-20 bg-background">
@@ -15,17 +15,17 @@ export function FeaturedProducts() {
             Featured Products
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover our handpicked selection of premium products, chosen for their 
+            Discover our handpicked selection of premium products, chosen for their
             exceptional quality and timeless style.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-        
+
         <div className="text-center">
           <Link to="/products">
             <Button variant="shop-outline" size="lg" className="text-lg px-8">

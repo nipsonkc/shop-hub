@@ -5,7 +5,7 @@ import { Navigation } from '@/components/Navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { products } from '@/data/products';
+import { sampleProducts } from '@/data/sampleProducts';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
 
@@ -16,7 +16,7 @@ export default function ProductDetail() {
   const { addToCart } = useCart();
   const { toast } = useToast();
 
-  const product = products.find(p => p.id === id);
+  const product = sampleProducts.find(p => p.id === id);
 
   if (!product) {
     return (
@@ -35,7 +35,7 @@ export default function ProductDetail() {
   }
 
   const handleAddToCart = () => {
-    if (!product.inStock) {
+    if (product.stock === 0) {
       toast({
         title: "Out of Stock",
         description: "This product is currently unavailable.",
@@ -47,18 +47,15 @@ export default function ProductDetail() {
     addToCart(product, quantity);
     toast({
       title: "Added to Cart",
-      description: `${quantity} × ${product.name} added to your cart.`,
+      description: `${quantity} × ${product.title} added to your cart.`,
     });
   };
 
-  const discountPercentage = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : null;
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb */}
         <div className="mb-8">
@@ -73,16 +70,11 @@ export default function ProductDetail() {
           <div className="space-y-4">
             <div className="relative overflow-hidden rounded-lg shadow-product">
               <img
-                src={product.image}
-                alt={product.name}
+                src={product.images[0]}
+                alt={product.title}
                 className="w-full h-96 lg:h-[500px] object-cover"
               />
-              {discountPercentage && (
-                <Badge className="absolute top-4 left-4 bg-shop-accent text-accent-foreground">
-                  -{discountPercentage}%
-                </Badge>
-              )}
-              {!product.inStock && (
+              {product.stock === 0 && (
                 <Badge variant="destructive" className="absolute top-4 left-4">
                   Out of Stock
                 </Badge>
@@ -94,7 +86,7 @@ export default function ProductDetail() {
           <div className="space-y-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary">{product.category}</Badge>
+                <Badge variant="secondary">{product.categoryPath[0]}</Badge>
                 <div className="flex items-center space-x-1">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="text-sm font-medium">{product.rating}</span>
@@ -103,26 +95,23 @@ export default function ProductDetail() {
                   </span>
                 </div>
               </div>
-              
+
               <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                {product.name}
+                {product.title}
               </h1>
-              
+
               <div className="flex items-center space-x-4 mb-4">
                 <span className="text-3xl font-bold text-shop-primary">
                   ${product.price}
                 </span>
-                {product.originalPrice && (
-                  <span className="text-xl text-muted-foreground line-through">
-                    ${product.originalPrice}
-                  </span>
-                )}
               </div>
             </div>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {product.description}
-            </p>
+            <div className="text-lg text-muted-foreground leading-relaxed">
+              {product.descriptionBullets.map((bullet, index) => (
+                <p key={index} className="mb-2">• {bullet}</p>
+              ))}
+            </div>
 
             {/* Quantity and Add to Cart */}
             <div className="space-y-4">
@@ -148,15 +137,15 @@ export default function ProductDetail() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  variant={product.inStock ? "add-to-cart" : "secondary"}
+                  variant={product.stock > 0 ? "default" : "secondary"}
                   className="flex-1"
                   onClick={handleAddToCart}
-                  disabled={!product.inStock}
+                  disabled={product.stock === 0}
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
-                  {product.inStock ? `Add to Cart - $${(product.price * quantity).toFixed(2)}` : 'Out of Stock'}
+                  {product.stock > 0 ? `Add to Cart - $${(product.price * quantity).toFixed(2)}` : 'Out of Stock'}
                 </Button>
-                
+
                 <Button
                   variant="shop-outline"
                   size="lg"
@@ -178,7 +167,7 @@ export default function ProductDetail() {
                     <p className="text-xs text-muted-foreground">On orders over $100</p>
                   </CardContent>
                 </Card>
-                
+
                 <Card className="border-0 shadow-product">
                   <CardContent className="p-4 text-center">
                     <Shield className="h-8 w-8 text-shop-primary mx-auto mb-2" />
@@ -186,7 +175,7 @@ export default function ProductDetail() {
                     <p className="text-xs text-muted-foreground">Quality guaranteed</p>
                   </CardContent>
                 </Card>
-                
+
                 <Card className="border-0 shadow-product">
                   <CardContent className="p-4 text-center">
                     <RotateCcw className="h-8 w-8 text-shop-primary mx-auto mb-2" />
