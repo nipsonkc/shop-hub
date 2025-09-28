@@ -29,7 +29,7 @@ export function BackgroundSlider() {
   };
 
   return (
-    <div className="relative w-full h-[400px] overflow-hidden">
+    <div className="relative w-full h-[500px] overflow-hidden">
       {/* Slider Images */}
       <div className="relative w-full h-full">
         {sliderImages.map((image, index) => (
